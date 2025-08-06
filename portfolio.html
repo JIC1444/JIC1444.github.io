@@ -63,11 +63,33 @@
     </header>
 
     <section>
-        <!-- Project 1 -->
+        <!-- Project 1: LLM for ARC AGI -->
         <div class="project">
-            <div class="project-title">Project 1</div>
+            <div class="project-title">Using RAG and Reinforcement Learning to improve the performance of an LLM on ARC AGI tasks</div>
             <img src="https://via.placeholder.com/400x200" alt="Placeholder Image">
-            <div class="project-description">Description 1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="project-description">ARC AGI is a set of 1000+ challenges 
+                which are easy for a human to solve, but difficult for an AI model. 
+                Top ranking models such as ChatGPT o3, Claude Sonnet 4 and Gemini 
+                2.5 Pro only score 6% or below on the 240 hidden test tasks.
+
+                In order to improve the reasoning capabilites of an LLM, I have
+                based my approach on reinforcement learning (RL) and RAG. My pipeline
+                looks like:
+                - Label the first 100 (of 1000) training tasks, with important
+                details of each task and the objects and relationships within them.
+                - Train Qwen3-14B using RL on these 100 tasks, using the guide labels.
+                - Train the model on the remaining 900 tasks, repeating any which are
+                unsuccessfully solved.
+                - Generate a text file of the raw output text from the model's
+                successful solves. Simplifing and generalising the language
+                using Qwen3-14B in inference mode.
+                - Create a Cognee graph using this text file.
+                - 
+
+
+                Note: the repo is currently private for the remainder of the 
+                competition (12/2025).
+            </div>
         </div>
         <hr>
 
