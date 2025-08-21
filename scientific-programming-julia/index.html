@@ -39,14 +39,16 @@
             font-size: 1rem;
             color: #333;
             margin-bottom: 15px;
+            line-height: 1.6;
         }
 
-        .project img {
-            width: 100%;
-            max-width: 400px;
-            display: block;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
+        .equation {
+            font-family: "Courier New", Courier, monospace;
+            background: #f9f9f9;
+            padding: 10px;
+            border-left: 3px solid #ccc;
+            margin: 15px 0;
+            overflow-x: auto;
         }
 
         hr {
@@ -55,34 +57,89 @@
             border-top: 1px solid #ccc;
         }
     </style>
+    <!-- MathJax for equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
 </head>
 <body>
+    <header>SIR</header>
 
-    <header>
-        Jake Cordery - BSc Mathematics Graduate<br>Machine Learning Portfolio 
-    </header>
     <section>
-
-        <!-- Project 2 DISSERTATION-->
         <div class="project">
-            <div class="project-title">Forecasting the spread of COVID-19 using deep learning</div>
-            <div class="project-description">My undergraduate dissertation project, 
-                for BSc Mathematics. This project entailed original research into
-                the deep learning architectures LSTMs (long-short term memory) and
-                GCNs (graph convolutional networks) in time-series forecasting. It
-                won the 'Best Novel Programming Project' Prize in 2025 from the
-                University of York and the Leeds-based medical software company, TPP.
-                <br><br>
-                I found that the most effective deep learning models were the LSTMs,
-                however, my work suggests that statistical methods such as ARIMA
-                are still the gold-standard for time-series prediciton.
-                <br><br>
-                <a href="https://github.com/JIC1444/Forecasting-Covid" target="_blank" rel="noopener noreferrer">Link to GitHub repository.</a>
+            <div class="project-title">Motivations</div>
+            <div class="project-description">
+                The SIR model groups a population within an epidemic into Susceptibles, Infecteds and Recovereds - allowing a simple but effective model for predicting (and hence mitigating), the spread of a disease. 
+                A standard SIR model assumes infection and recovery rates are constant, where in reality these change over time due to factors such as seasons, interventions or behaviours. 
+                Given the standard SIR model is:
             </div>
-            <img src="images/forecasting_covid_results_graph.png" alt="Project results graph"><img src="images/forecasting_covid_results_table.png" alt="Project results table">
+            <div class="equation">
+                \[
+                \frac{dS}{dt} = - \beta \frac{SI}{N}, \quad
+                \frac{dI}{dt} = \beta \frac{SI}{N} - \gamma I, \quad
+                \frac{dR}{dt} = \gamma I
+                \]
+            </div>
+            <div class="project-description">
+                The constants \(\beta\) and \(\gamma\) are the infection and recovery rates respectively. 
+                Constants allow a basic but narrow set of circumstances to be modelled (and can easily be worked out by hand). However, by changing these to random variables, this allows us to have a Bayesian workflow and incorporate uncertainty, giving a fuller picture into the possible space of outcomes.
+            </div>
         </div>
+
         <hr>
 
+        <div class="project">
+            <div class="project-title">Priors</div>
+            <div class="project-description">
+                How do we decide what the probability distributions for \(\beta\) and \(\gamma\) should be? Say that for ease, the typical recovery timescale is 10 days, therefore the recovery rate will be \(\gamma \simeq 0.1\) day\(^{-1}\). 
+                Then the prior will be
+            </div>
+            <div class="equation">
+                \[
+                \log \gamma \sim \mathcal{N}(\log 0.1, 0.5^2)
+                \]
+            </div>
+            <div class="project-description">
+                Then, if \(R_0\) is the basic reproduction number, where \(R_0 = \frac{\beta}{\gamma}\) is in the range 1–4, then \(\beta\) is 0.1–0.4 through rearranging. Hence the prior is
+            </div>
+            <div class="equation">
+                \[
+                \log \beta \sim \mathcal{N}(\log 0.25, 0.5^2)
+                \]
+            </div>
+            <div class="project-description">
+                It is worth noting that the log-normal distribution was used since \(\beta\) and \(\gamma\) cannot be negative, and as well, the scale invariance of the log function.
+            </div>
+        </div>
 
+        <hr>
+
+        <div class="project">
+            <div class="project-title">Initial conditions and observation noise</div>
+            <div class="project-description">
+                We place weak priors on initial prevalence and on measurement noise. For example, with population \(N\),
+            </div>
+            <div class="equation">
+                \[
+                \log I_0 \sim \mathcal{N}(\log 10,\;0.5^2), \quad 
+                S_0 = N - I_0, \quad 
+                R_0^{(\mathrm{init})}=0
+                \]
+            </div>
+            <div class="project-description">
+                and model observed counts \(y_t\) (e.g., infected or incidence) with either
+            </div>
+            <div class="equation">
+                \[
+                y_t \mid I(t) \sim \mathcal{N}(I(t), \sigma^2), 
+                \quad \sigma \sim \text{Half-}t_\nu(0, s)
+                \]
+            </div>
+            <div class="project-description">
+                or a count model such as Negative Binomial if dispersion is evident.
+            </div>
+        </div>
+    </section>
 </body>
 </html>
