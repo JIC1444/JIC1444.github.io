@@ -75,17 +75,30 @@
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">SIR Modelling with a Bayesian Workflow</h1>
             <p class="mt-4 text-xl text-gray-600">
                 Jake Cordery - August 2025
+                <br>
+                <a href="https://jic1444.github.io">Back to Portfolio</a>
             </p>
         </header>
 
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">0. Introduction</h2>
             <p class="text-gray-700 mb-6">
-                This project extends the use of deterministic SIR ODEs by using Bayesian machine learning. This is done by using Bayes' theorem in order to refine a prior distribution of the possible parameter values of the system of ODEs, which allows more accurate predictions as well as the incorporation of uncertainty when forecasting the spread of disease.
+                This project extends the use of deterministic SIR ODEs by using 
+                Bayesian machine learning. This is done by using Bayes' theorem 
+                in order to refine a prior distribution of the possible parameter 
+                values of the system of ODEs, which allows more accurate predictions 
+                as well as the incorporation of uncertainty when forecasting the 
+                spread of disease.
                 <br><br>
-                Julia is an excelllent programming language to do this in, due to its high-level and intuitive syntax, which allows quick prototyping - similar to Python. However, Julia also achieves performance which is comparable to C - where Python falls short.
-                <br><br>
-                Julia was also designed with mathematical and numerical programming in mind, hence the large array of packages with optimised algorithms for this style of project. The star of this project is the package Turing.jl - a statistical programming language which allows streamlined prototyping and ultra-performant Bayesian inference.
+                Julia is an excelllent programming language to do this in, due 
+                to its high-level and intuitive syntax, which allows quick prototyping 
+                - similar to Python. However, Julia also achieves performance which 
+                is comparable to C - where Python falls short.
+                Julia was also designed with mathematical and numerical programming 
+                in mind, hence the large array of packages with optimised algorithms 
+                for this style of project. The star of this project is the package 
+                Turing.jl - a statistical programming language which allows 
+                streamlined prototyping and ultra-performant Bayesian inference.
                 <br><br>
                 The structure of this project follows that of a Bayesian Workflow:
                 <br>
@@ -94,13 +107,20 @@
                 2. Inference
                 <br>
                 3. Model checking (and or improvement)
+                <br>
+                And then tests the model further by forecasting different scenarios 
+                during an epidemic.
             </p>
         </section>
 
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">1. Model Building & Synthetic Data Generation</h2>
             <p class="text-gray-700 mb-6">
-                The first step is to define the system of ODEs which govern the disease mechanics, the SIR model is perfect for simple mathematical modelling of a disease. The SIR model splits a population into three compartments: Susceptible ($S$), Infected ($I$) and Recovered ($R$). The mathematical equations are as follows:
+                The first step is to define the system of ODEs which govern the 
+                disease mechanics, the SIR model is perfect for simple mathematical 
+                modelling of a disease. The SIR model splits a population into three 
+                compartments: Susceptible ($S$), Infected ($I$) and Recovered ($R$). 
+                The mathematical equations are as follows:
             </p>
             <div class="equations">
                 <div class="equations-inner">
@@ -112,7 +132,10 @@
                 </div>
             </div>
             <p class="text-gray-700 mb-6">
-                As can be seen, the rate of change in one compartment depends on the infection rate $\beta$ or the recovery rate $\gamma$, and the interacting populations. The Julia code below defines the system of equations:
+                As can be seen, the rate of change in one compartment depends on the 
+                infection rate $\beta$ or the recovery rate $\gamma$, and the 
+                interacting populations. The Julia code below defines the system
+                of equations:
             </p>
             <div class="code-block">
                 <pre><code>using Turing, DifferentialEquations, Distributions
@@ -142,7 +165,7 @@ end</code></pre>
                 <br><br>
                 Using these values, the model with known parameters is used to calculate the solution to the system of ODEs. Adding Gaussian noise mimics the reporting biases, miscounting and other inconsistencies which is seen in real-world data.
                 <br><br>
-                The code below gives the initial conditions:
+                The code below defines the initial conditions:
                 <br>
                 - $N$ (population) = 10,000
                 <br>
@@ -180,7 +203,10 @@ savefig("figs/noisy_true_sol.png")</code></pre>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 1: True Solution</h3>
             <p class="text-gray-700 mb-4">
-                The solution of the SIR model with $\beta, \gamma = 0.25, 0.1$. The blue trajectory is the Susceptible compartment, the green is the Infected compartment and the orange is the Recovered compartment.
+                The solution of the SIR model with $\beta, \gamma = 0.25, 0.1$. 
+                The blue trajectory is the Susceptible compartment, 
+                the orange is the Infected compartment 
+                and the green is the Recovered compartment.
             </p>
             <div class="figure-container">
                 <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/true_sol.png" alt="Plot of the true SIR solution.">
@@ -188,7 +214,8 @@ savefig("figs/noisy_true_sol.png")</code></pre>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 2: Noisy Data</h3>
             <p class="text-gray-700 mb-4">
-                The solution from before, with added Gaussian noise.
+                The solution from before, with added Gaussian noise to emulate error-
+                prone, real-world data.
             </p>
             <div class="figure-container">
                 <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/noisy_true_sol.png" alt="Plot of the true SIR solution with noise.">
@@ -198,15 +225,25 @@ savefig("figs/noisy_true_sol.png")</code></pre>
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">2. Bayesian Model Definition</h2>
             <p class="text-gray-700 mb-6">
-                The next step is to build the Bayesian model. This involves two key components:
+                The next step is to build the Bayesian model. This involves two key 
+                components:
                 <br>
                 - specifying our prior beliefs (to inform the parameters)
                 <br>
-                - defining the likelihood that connects our model's predictions to the observed data.
+                - defining the likelihood that connects our model's predictions to the 
+                observed data.
                 <br><br>
-                To begin with, imagine a dataset of recovery times for the disease, this dataset shows a range of values from a few days to a month, with the mode being 10 - we may be able to say from this that the recovery time is around 10 days, but with a fair bit of uncertainty. Setting the weakly-informed prior as $\gamma \sim \text{Normal}(\log(0.1), 0.5)$ encompasses recovery times from 1 day to 74 days.
+                To begin with, imagine a dataset of recovery times for the disease, 
+                this dataset shows a range of values from a few days to a month, 
+                with the mode being 10 - we may be able to say from this that the r
+                ecovery time is around 10 days, but with a fair bit of uncertainty. 
+                Setting the weakly-informed prior as $\gamma \sim \text{Normal}(\log(0.1), 0.5)$ 
+                encompasses recovery times from 1 day to 74 days.
                 <br><br>
-                Then, for a disease to become an epidemic, $R_0 > 1$. Our guess of 2 is a good starting point and the prior $\beta \sim \text{Normal}(\log(2.0), 0.4)$ encompasses any $R_0$ value from 0.9 to 4.4. Hence $\beta$ can be calculated via $\beta=R_0 \cdot \gamma$.
+                Then, for a disease to become an epidemic, $R_0 > 1$. Our guess of 2 
+                is a good starting point and the prior $\beta \sim \text{Normal}(\log(2.0), 0.4)$ 
+                encompasses any $R_0$ value from 0.9 to 4.4. Hence $\beta$ can be calculated via 
+                $\beta=R_0 \cdot \gamma$.
                 <br><br>
                 The code below uses Turing.jl's `@model` macro to define this. `@model` enables the user to assign probability distributions to variables in the function. It also takes data in as input, then calculates the likelihoods, which then connects the parameters to the observations. It also automatically prepares the model for inference in the MCMC algorithm.
             </p>
@@ -234,7 +271,10 @@ end</code></pre>
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">3. Sampling</h2>
             <p class="text-gray-700 mb-6">
-                Now the Bayesian model is defined, the sampling algorithm No-U-Turn Sampler (NUTS) will draw thousands of samples from the posterior distribution. The posterior distribution represents our updated beliefs about the parameters after we've seen the data.
+                Now the Bayesian model is defined, the sampling algorithm No-U-Turn 
+                Sampler (NUTS) will draw thousands of samples from the posterior 
+                distribution. The posterior distribution represents the updated 
+                beliefs about the parameters after observing the data.
             </p>
             <div class="code-block">
                 <pre><code># -----------
@@ -252,10 +292,18 @@ display(summarystats(chain))</code></pre>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 3: Chain Plot</h3>
             <p class="text-gray-700 mb-4">
-                This plot shows the trace and density of the posterior samples. The trace plot has no obvious trends as it is exploring the parameter space.
-                <br><br>
-                The density plots show the posterior distribution for each parameter. The summary of the chain shows that the mean of the posterior distributions is close to the true parameter values used to generate the data:
+                This plot shows the trace and density of the posterior samples. 
+                The trace plot has no obvious trends as it is exploring the 
+                parameter space. (Note in each graph there are 3 coloured lines,
+                these represent each indepedent chain of NUTS).
+                The density plots show the posterior distribution for each parameter. 
+                The summary of the chain shows that the mean of the posterior 
+                distributions is close to the true parameter values used to 
+                generate the data:
                 $$ \beta \approx 0.25, \gamma \approx 0.10 $$
+                With this, and the very small std, we can discern that the 
+                model has converged on a suitable solution.
+                This is backed up by the rhat values of ~1.00.
             </p>
             <div class="figure-container">
                 <img src="https://github.com/JIC1444/JIC1444.github.io/raw/bfdd03620461bc068b5063008016c38005339676/scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters.">
@@ -269,7 +317,11 @@ display(summarystats(chain))</code></pre>
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">4. Model Checking</h2>
             <p class="text-gray-700 mb-6">
-                The next step in a Bayesian Workflow is to check if the fitted model can reproduce data which closely resembles the observed data. By taking many samples from the posterior distribution (1000 in this case) these can be put into the ODE and solved to generate similar data.
+                The next step in a Bayesian Workflow is to check if the fitted model 
+                can reproduce data which closely resembles the observed data.
+                 By taking many samples from the posterior distribution 
+                 (1000 in this case) these can be put into the ODE and solved 
+                 to generate similar data.
             </p>
             <div class="code-block">
                 <pre><code># -----------
@@ -308,7 +360,9 @@ savefig(generated_plot, "figs/generated_sols.png")</code></pre>
             </div>
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 4: Posterior-Informed Data</h3>
             <p class="text-gray-700 mb-4">
-                This shows that the generated trajectories generated by the posteriors are a good fit, as the cloud of these trajectories closely resembles the original data (without noise).
+                This plot shows that the trajectories generated by
+                the posteriors are a good fit, as the 'cloud' of these lines 
+                closely resembles the original data (without noise).
             </p>
             <div class="figure-container">
                 <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/generated_sols.png" alt="A plot showing a cloud of simulated trajectories.">
@@ -319,7 +373,11 @@ savefig(generated_plot, "figs/generated_sols.png")</code></pre>
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">5. Forecasting</h2>
             <p class="text-gray-700 mb-6">
-                Finally, the posterior distribution can be used to make predictions about the future, from day any $n$ to $n+m$ within the epidemic. By running the model forward in time with multiple sets of parameters drawn from the posterior, we can quantify the uncertainty in the forecasts.
+                Finally, the posterior distribution can be used to make predictions 
+                about the future, from day any $n$ to $n+m$ within the epidemic. 
+                By running the model forward in time with multiple sets of parameters 
+                drawn from the posterior, we can quantify the uncertainty in the 
+                forecasts.
             </p>
             <div class="code-block">
                 <pre><code># -----------
@@ -398,13 +456,35 @@ savefig("figs/forecast.png")</code></pre>
             
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 5: Forecast</h3>
             <p class="text-gray-700 mb-4">
-                This shows a series of forecasts starting from the days 20, 35 and 60. These days were chosen as they represent easy/hard points in the epidemic to predict. For example, the uncertainty is low from day 60 onwards, where the number of infected individuals exhibits a smooth downward trend. In contrast, the model's forecasts from day 20 show a large amount of uncertainty, correctly capturing the dynamic and unpredictable nature of the epidemic's peak.
+                This shows a series of forecasts starting from the days 20, 35 and 60. 
+                These days were chosen as they represent different periods of infection rate
+                in the epidemic. For example, the uncertainty is low from day 
+                60 onwards, where the number of infected individuals exhibits a smooth 
+                downward trend. In contrast, the model's forecasts from day 20 show a 
+                large amount of uncertainty, capturing the volatile behaviour
+                nature of the epidemic's peak.
                 <br><br>
-                The lengths of 5, 15 and 30 days were chosen to show that uncertainty increases as the forecasting window extends.
+                The lengths of 5, 15 and 30 days were chosen to show that uncertainty 
+                increases as the forecasting window extends. This usually creates a 
+                'cone' of uncertainty, which can be seen best in the Day 20-35 plot.
             </p>
             <div class="figure-container">
                 <img id="forecast-image" src="https://github.com/JIC1444/JIC1444.github.io/raw/408884d0f7df79b5b0c3ff030eb8bac1dfcde532/scientific-programming-julia/figs/forecast.png" alt="A grid plot showing multiple forecast simulations.">
             </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-4">Concluding statement</h2>
+            <p class="text-gray-700 mb-6">
+                It is clear to see that when predicting phenomena modelled
+                by ODEs, the Bayesian workflow provides a powerful way to find 
+                a suitable distribution for the parameter values and validate the model.
+                <br><br>
+                The Julia language allows rapid development and prototyping of pipelines,
+                along with breakneck computation. This, along with tools such as 
+                DifferentialEquations.jl and Turing.jl make this language brilliant 
+                choice for numerical analysis and machine learning tasks. 
+            </p>
         </section>
     </div>
 </body>
