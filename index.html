@@ -69,12 +69,13 @@
         }
 
         .image-container img {
-            width: 100%; /* Allows image to fill its container */
+            flex: 1; /* Allows images to grow and share the space equally */
+            min-width: 0; /* Prevents images from overflowing their container */
             border: 1px solid #ccc;
         }
 
         hr {
-            margin: 30px 0;
+            margin: 60px 0; /* Increased margin for better separation */
             border: 0;
             border-top: 1px solid #ccc;
         }
@@ -87,30 +88,29 @@
     </header>
 
     <section>
-        <hr>
-
-        <section>
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://jic1444.github.io/scientific-programming-julia" target="_blank" rel="noopener noreferrer">Disease Modelling in Julia</a>
-                </div>
-                <img src="">
-                <div class="project-description">
-                    A project exploring the mathematical and statistical side of disease modelling 
-                    (as my dissertation focussed on the use of deep learning methods).
-                    It combined the skills and experience gained in modules: Statistical Pattern 
-                    Recognition, Mathematical Modelling: Computational Methods
-                    and Mathematical Ecology, Epidemiology & Evolution. 
-                    <br><br>
-                    I found that Bayesian modelling can enable a strong idea of how a disease
-                    may spread through a population, with much less data and computational power
-                    than deep learning methods.
-                </div>
-                <div class="image-container">
-                    <img src="images/chain.png" alt="Chain results graph">
-                    <img src="images/forecast.png" alt="Forecast graphs">
-                </div>
+        <div class="project">
+            <div class="project-title">
+                <a href="https://jic1444.github.io/scientific-programming-julia" target="_blank" rel="noopener noreferrer">Disease Modelling in Julia</a>
             </div>
+            <img src="">
+            <div class="project-description">
+                A project exploring the mathematical and statistical side of disease modelling 
+                (as my dissertation focussed on the use of deep learning methods).
+                It combined the skills and experience gained in modules: Statistical Pattern 
+                Recognition, Mathematical Modelling: Computational Methods
+                and Mathematical Ecology, Epidemiology & Evolution. 
+                <br><br>
+                I found that Bayesian modelling can enable a strong idea of how a disease
+                may spread through a population, with much less data and computational power
+                than deep learning methods.
+            </div>
+            <div class="image-container">
+                <img src="images/chain.png" alt="Chain results graph">
+                <img src="images/forecast.png" alt="Forecast graphs">
+            </div>
+        </div>
+
+        <hr>
 
         <div class="project">
             <div class="project-title">
@@ -132,6 +132,7 @@
                 <img src="images/forecasting_covid_results_table.png" alt="Project results table">
             </div>
         </div>
+
         <hr>
 
         <div class="project">
@@ -155,6 +156,7 @@
             </div>
             <img src="images/unet_results.png" alt="Segmentation results">
         </div>
+
         <hr> 
 
         <div class="project">
@@ -186,9 +188,7 @@
                 <img src="images/scandes_bp.png" alt="Project figure 2">
             </div>
         </div>
-        <hr>
-
-        </section>
+    </section>
 
 </body>
 </html>
