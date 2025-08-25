@@ -161,7 +161,7 @@ savefig("figs/noisy_true_sol.png")</code></pre>
                 the green is the Infected compartment and the orange is the Recovered compartment
             </p>
             <div class="figure-placeholder">
-                <img src="images/figs/true_sol.png" alt="Plot of the true SIR solution." class="w-full h-full object-cover rounded-lg">
+                <img src="scientific-programming-julia/figs/true_sol.png" alt="Plot of the true SIR solution." class="w-full h-full object-cover rounded-lg">
             </div>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 2: Noisy Data</h3>
@@ -169,7 +169,7 @@ savefig("figs/noisy_true_sol.png")</code></pre>
                 The solution from before, with added Gaussian noise.
             </p>
             <div class="figure-placeholder">
-                <img src="images/figs/noisy_true_sol.png" alt="Plot of the true SIR solution with noise." class="w-full h-full object-cover rounded-lg">
+                <img src="scientific-programming-julia/figs/noisy_true_sol.png" alt="Plot of the true SIR solution with noise." class="w-full h-full object-cover rounded-lg">
             </div>
         </section>
 
@@ -246,7 +246,7 @@ display(summarystats(chain))</code></pre>
                 generate the data ($$\beta \approx 0.25, \gamma \approx 0.10$$).
             </p>
             <div class="figure-placeholder">
-                <img src="images/figs/chain.png" alt="Placeholder for a plot of the MCMC chains, showing trace and density plots for the parameters." class="w-full h-full object-cover rounded-lg">
+                <img src="scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters." class="w-full h-full object-cover rounded-lg">
             </div>
         </section>
 
@@ -256,7 +256,8 @@ display(summarystats(chain))</code></pre>
                 The next step in a Bayesian Workflow, is to check if the fitted model can reproduce data 
                 which closely resembles the observed 
                 data. By taking many samples from the posterior distribution (the `chain`) 
-                they can be used to generate new simulated data. We then plot these simulated trajectories 
+                they can be used
+                 to generate new simulated data. We then plot these simulated trajectories 
                 on top of the original noisy data.
             </p>
             <div class="code-block">
