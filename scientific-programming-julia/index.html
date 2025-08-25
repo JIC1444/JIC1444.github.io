@@ -83,7 +83,7 @@
             <p class="text-gray-700 mb-6">
                 The first step is to define the system of ODEs which govern the disease mechanics, the SIR model is 
                 perfect for simple mathematical modelling of a disease. The SIR model splits a population into three 
-                compartments: Susceptible, Infected and Recovered. The mathematics is:
+                compartments: Susceptible, Infected and Recovered. The mathematical equations are as follows:
 
                 As can be seen, the rate of change in one compartment, depends on the infection rate β or the recovery 
                 rate γ, and the interacting populations. The Julia code below defines the system of equations:
@@ -188,7 +188,6 @@ savefig("figs/noisy_true_sol.png")</code></pre>
                 <br><br>
                 Then, for a disease to become an epidemic, R_0 > 0. Our guess of 2 is a good starting point and the prior β ~ Normal(log(2.0), 0.4)
                 encompasses any R_0 value from 0.9 to 4.4. Hence β can be calculated via β=R_0 * γ.
-
                 <br><br>
                 The code below uses Turing.jl's `@model` macro to define this. 
                 @model enables the user to assign probability distributions to variables in the function.
@@ -246,7 +245,7 @@ display(summarystats(chain))</code></pre>
                 generate the data ($$\beta \approx 0.25, \gamma \approx 0.10$$).
             </p>
             <div class="figure-placeholder">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/bfdd03620461bc068b5063008016c38005339676/scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters." class="w-full h-full object-cover rounded-lg">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/bfdd03620461bc068b5063008016c38005339676/scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters." class="w-full rounded-lg">
             </div>
         </section>
 
@@ -254,46 +253,43 @@ display(summarystats(chain))</code></pre>
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">3. Model Checks</h2>
             <p class="text-gray-700 mb-6">
                 The next step in a Bayesian Workflow, is to check if the fitted model can reproduce data 
-                which closely resembles the observed 
-                data. By taking many samples from the posterior distribution (the `chain`) 
-                they can be used
-                 to generate new simulated data. We then plot these simulated trajectories 
-                on top of the original noisy data.
+                which closely resembles the observed data. By taking many samples from the posterior 
+                distribution (1000 in this case) these can be put into the ODE and solved to generate similar data.
             </p>
             <div class="code-block">
                 <pre><code># -----------
-# Use model to generate data
-# -----------
-log_gammas = chain[:log_γ]
-log_R0s = chain[:log_R0]
-gammas = exp.(log_gammas)
-R0s = exp.(log_R0s)
-betas = gammas .* R0s
-
-# The number of simulations you want to run
-num_simulations = length(betas)
-simulated_infected = Vector{Vector{Float64}}(undef, num_simulations)
-for i in 1:num_simulations
-    β_i = betas[i]
-    γ_i = gammas[i]
-    
-    # Define the ODE problem with these specific parameters
-    p_i = [β_i, γ_i]
-    prob = ODEProblem(sir, u0, tspan, p_i)
-
-    # Solve the ODE
-    sol = solve(prob, Tsit5())
-    
-    # Store the infected individuals trajectory
-    simulated_infected[i] = sol[2, :] 
-end
-
-p = plot(title="Posterior-Informed Data", legend=false)
-for i in 1:num_simulations
-    plot!(p, sol.t, simulated_infected[i], alpha=0.1, color=:blue)
-end
-display(p)
-savefig("figs/generated_sols.png")</code></pre>
+                    # Use model to generate data
+                    # -----------
+                    log_gammas = chain[:log_γ]
+                    log_R0s = chain[:log_R0]
+                    gammas = exp.(log_gammas)
+                    R0s = exp.(log_R0s)
+                    betas = gammas .* R0s
+                    
+                    num_simulations = length(betas)
+                    simulated_infected = Vector{Vector{Float64}}(undef, num_simulations)
+                    time_points = sol.t
+                    
+                    generated_plot = plot(
+                        xlabel = "Time",
+                        ylabel = "I(t)",
+                        title = "Posterior Predictive Checks",
+                        legend = false,
+                    )
+                    
+                    for i in 1:num_simulations
+                        β_i = betas[i]
+                        γ_i = gammas[i]
+                        
+                        p_i = [β_i, γ_i]
+                        prob_i = ODEProblem(sir, u0, tspan, p_i)
+                    
+                        # Solve the ODE and save at the same time points
+                        sol_i = solve(prob_i, Tsit5(), saveat=time_points)
+                        plot!(generated_plot, sol_i.t, sol_i[2, :], color=:black, alpha=0.9)
+                    end
+                    
+                    savefig(generated_plot, "figs/generated_sols.png")</code></pre>
             </div>
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 4: Posterior-Informed Data</h3>
             <p class="text-gray-700 mb-4">
@@ -310,9 +306,10 @@ savefig("figs/generated_sols.png")</code></pre>
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">4. Forecasting</h2>
             <p class="text-gray-700 mb-6">
-                Finally, we use the posterior distribution to make predictions about the future. 
+                Finally, the posterior distribution can be used to make predictions about the future, from
+                day any n to n+m within the epidemic. 
                 By running the model forward in time with multiple sets of parameters drawn from 
-                our posterior, we can quantify the uncertainty in our forecasts. 
+                the posterior, this quantify the uncertainty in the forecasts. 
             </p>
             <div class="code-block">
                 <pre><code># -----------
@@ -324,7 +321,7 @@ forecast_from = [20, 35, 60]
 t_end_historical = 100.0
 I_0 = 75.0
 u0_historical = [N - I0, I0, 0.0]
-p_historical = [0.25, 0.1] # Use mean of your posterior or a single good-fit value
+p_historical = [0.25, 0.1]
 prob_historical = ODEProblem(sir_ode!, u0_historical, (0.0, t_end_historical), p_historical)
 sol_historical = solve(prob_historical, Tsit5())
 
@@ -387,21 +384,22 @@ end
 
 plot(p_grid..., layout=(3, 3), size=(1200, 1200), xlabel="Time (days)", ylabel="Infected Population")
 savefig("figs/forecast.png")</code></pre>
-            </div>
-            <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 5: Forecast</h3>
-            <p class="text-gray-700 mb-4">
-                This shows a series of forecasts starting from different time points. Dates which 
-                precede a large increases in case numbers are expected to be more uncertain,
-                whereas the stable increase/decreases should be relatively accurate. When trying
-                to predict further in time, the uncertainty will also grow.
-                <br><br>
-                This is exactly what is observed in the plot, as the blue trajectories do 
-                <br><br>
-
-            </p>
             <div class="figure-placeholder">
                 <img src="https://placehold.co/600x400?text=Figure+5:+Forecasting+Results" alt="Placeholder for a grid plot showing multiple forecast simulations." class="w-full h-full object-cover rounded-lg">
             </div>
+            </div>
+            <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 5: Forecast</h3>
+            <p class="text-gray-700 mb-4">
+                This shows a series of forecasts starting from the days 20, 35 and 60. These 
+                days were chosen as they represent easy/hard points in the epidemic to predict - 
+                for example, day 60 onwards exhibit a smooth downwards trend and hence the 
+                uncertainty is low. In contrast, the model did not successfully forecast from day 20,
+                due to the large spike in cases. 
+                <br><br>
+                The lengths of 5, 15 and 30 days were chosen to show that uncertainty increases as the
+                forecasting window extends. 
+                <br><br>
+            </p>
         </section>
 
     </div>
