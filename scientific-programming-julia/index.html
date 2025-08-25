@@ -192,7 +192,7 @@ savefig("figs/noisy_true_sol.png")</code></pre>
                 <br><br>
                 Then, for a disease to become an epidemic, $R_0 > 1$. Our guess of 2 is a good starting point and the prior $\beta \sim \text{Normal}(\log(2.0), 0.4)$ encompasses any $R_0$ value from 0.9 to 4.4. Hence $\beta$ can be calculated via $\beta=R_0 \cdot \gamma$.
                 <br><br>
-                The code below uses Turing.jl's `@model` macro to define this. `@model` enables the user to assign probability distributions to variables in the function. It also takes data in as input, then calculates the likelihoods, which then connects the parameters to the observations. It also automatically prepares the model for inference in the MCMC algorithm.
+                The code below uses Turing.jl's @model macro to define this. @model enables the user to assign probability distributions to variables in the function. It also takes data in as input, then calculates the likelihoods, which then connects the parameters to the observations. It also automatically prepares the model for inference in the MCMC algorithm.
             </p>
             <div class="code-block">
                 <pre><code>@model function sir_model(data, prob)
