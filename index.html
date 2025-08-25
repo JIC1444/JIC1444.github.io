@@ -33,6 +33,17 @@
             font-family: "Courier New", Courier, monospace;
             font-size: 1.5rem;
             margin-bottom: 10px;
+            font-weight: bold; /* Title is now bold */
+        }
+        
+        /* Style for linked titles */
+        .project-title a {
+            color: inherit; /* Keeps the title color */
+            text-decoration: none; /* Removes the underline */
+        }
+
+        .project-title a:hover {
+            text-decoration: underline; /* Adds underline on hover */
         }
 
         .project-description {
@@ -41,11 +52,24 @@
             margin-bottom: 15px;
         }
 
-        .project img {
+        /* General style for a single project image */
+        .project > img {
             width: 100%;
             max-width: 400px;
             display: block;
             margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        
+        /* Container for multiple images to appear side-by-side */
+        .image-container {
+            display: flex; /* Enables flexbox layout */
+            gap: 15px; /* Adds space between images */
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 100%; /* Allows image to fill its container */
             border: 1px solid #ccc;
         }
 
@@ -63,38 +87,13 @@
     </header>
 
     <section>
-        <!-- Project 1: LLM for ARC AGI -->
-        <!-- <div class="project">
-            <div class="project-title">Using RAG and Reinforcement Learning to improve the performance of an LLM on ARC AGI tasks</div>
-            <img src="https://via.placeholder.com/400x200" alt="Placeholder Image">
-            <div class="project-description">ARC AGI is a set of 1000+ challenges 
-                which are easy for a human to solve, but difficult for an AI model. 
-                Top ranking models such as ChatGPT o3, Claude Sonnet 4 and Gemini 
-                2.5 Pro only score 6% or below on the 240 hidden test tasks.
-
-                In order to improve the reasoning capabilites of an LLM, I have
-                based my approach on reinforcement learning (RL) and RAG. My pipeline
-                looks like:
-                - Label the first 100 (of 1000) training tasks, with important
-                details of each task and the objects and relationships within them.
-                - Train Qwen3-14B using RL on these 100 tasks, using the guide labels.
-                - Train the model on the remaining 900 tasks, repeating any which are
-                unsuccessfully solved.
-                - Generate a text file of the raw output text from the model's
-                successful solves. Simplifing and generalising the language
-                using Qwen3-14B in inference mode.
-                - Create a Cognee graph using this text file.
-                - 
-
-
-                Note: the repo is currently private for the remainder of the 
-                competition (11/2025).
-            </div>
-        </div> -->
         <hr>
 
         <section>
             <div class="project">
+                <div class="project-title">
+                    <a href="https://jic1444.github.io/scientific-programming-julia" target="_blank" rel="noopener noreferrer">Disease Modelling in Julia</a>
+                </div>
                 <img src="">
                 <div class="project-description">
                     A project exploring the mathematical and statistical side of disease modelling 
@@ -106,16 +105,17 @@
                     I found that Bayesian modelling can enable a strong idea of how a disease
                     may spread through a population, with much less data and computational power
                     than deep learning methods.
-                    <br><br>
-                    <a href="https://jic1444.github.io/scientific-programming-julia" target="_blank" rel="noopener noreferrer">Project GitHub.io page.</a>
                 </div>
-                <img src="images/chain.png" alt="Chain results graph"><img src="images/forecast.png" alt="Forecast graphs">
-
+                <div class="image-container">
+                    <img src="images/chain.png" alt="Chain results graph">
+                    <img src="images/forecast.png" alt="Forecast graphs">
+                </div>
             </div>
 
-        <!-- Project 2 DISSERTATION-->
         <div class="project">
-            <div class="project-title">Forecasting the spread of COVID-19 using deep learning</div>
+            <div class="project-title">
+                <a href="https://github.com/JIC1444/Forecasting-Covid" target="_blank" rel="noopener noreferrer">Forecasting the spread of COVID-19 using deep learning</a>
+            </div>
             <div class="project-description">My undergraduate dissertation project, 
                 for BSc Mathematics. This project entailed original research into
                 the deep learning architectures LSTMs (long-short term memory) and
@@ -126,18 +126,20 @@
                 I found that the most effective deep learning models were the LSTMs,
                 however, my work suggests that statistical methods such as ARIMA
                 are still the gold-standard for time-series prediciton.
-                <br><br>
-                <a href="https://github.com/JIC1444/Forecasting-Covid" target="_blank" rel="noopener noreferrer">Link to GitHub repository.</a>
             </div>
-            <img src="images/forecasting_covid_results_graph.png" alt="Project results graph"><img src="images/forecasting_covid_results_table.png" alt="Project results table">
+            <div class="image-container">
+                <img src="images/forecasting_covid_results_graph.png" alt="Project results graph">
+                <img src="images/forecasting_covid_results_table.png" alt="Project results table">
+            </div>
         </div>
         <hr>
 
-        <!-- Project 3 MRI -->
         <div class="project">
-            <div class="project-title">Detecting degenerative conditions in the lumbar region using a U-Net</div>
-            <div class="project-description">A project, based on this 
-                <a href="https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification">Kaggle competition</a> 
+            <div class="project-title">
+                <a href="https://github.com/JIC1444/U-Net-Lumbar-Degeneration-Classification" target="_blank" rel="noopener noreferrer">Detecting degenerative conditions in the lumbar region using a U-Net</a>
+            </div>
+            <div class="project-description">A project based on a 
+                <a href="https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification" target="_blank" rel="noopener noreferrer">Kaggle competition</a>
                 whereby the RSNA (Radiological Society of North America) 
                 curated the largest public dataset consisting of around 2,000 
                 patients, with more than 100,000 slices of MRI scans.
@@ -155,9 +157,10 @@
         </div>
         <hr> 
 
-        <!-- Project 4 BABS-->
         <div class="project">
-            <div class="project-title">Spatial analysis of micro-organisms in the Scandes mountain range</div>
+            <div class="project-title">
+                <a href="https://github.com/JIC1444/Spatial-Analysis-of-Microorganisms-Scandes" target="_blank" rel="noopener noreferrer">Spatial analysis of micro-organisms in the Scandes mountain range</a>
+            </div>
             <div class="project-description">A data science project completed in the 
                 module 'Becoming a Bioscientist IV: Research in Action' at the University
                 of York. This project persued the question "Is there a correlation 
@@ -177,28 +180,15 @@
                 To achieve the level of detail and control I wanted, I created
                 a custom R package 'py2RNetworkX', which ported the Python package
                 NetworkX to R. <a href="https://github.com/JIC1444/py2RNetworkX">py2RNetworkX Repo</a>
-                <a href="https://github.com/JIC1444/Spatial-Analysis-of-Microorganisms-Scandes">Project Repo</a>
-
             </div>
-            <img src="images/scandes_kg.png" alt="Project figure 1"><img src="images/scandes_bp.png" alt="Project figure 2">
+            <div class="image-container">
+                <img src="images/scandes_kg.png" alt="Project figure 1">
+                <img src="images/scandes_bp.png" alt="Project figure 2">
+            </div>
         </div>
         <hr>
 
-        <!-- Project 5
-        <div class="project">
-            <div class="project-title">Project 5</div>
-            <img src="https://via.placeholder.com/400x200" alt="Placeholder Image">
-            <div class="project-description">Description 5 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-        </div>
-        <hr>  -->
-
-        <!-- Project 6
-        <div class="project">
-            <div class="project-title">Project 6</div>
-            <img src="https://via.placeholder.com/400x200" alt="Placeholder Image">
-            <div class="project-description">Description 6 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-        </div> -->
-    </section>
+        </section>
 
 </body>
 </html>
