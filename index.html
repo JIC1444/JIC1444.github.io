@@ -70,10 +70,9 @@
 
         .image-container img {
             flex: 1; /* Allows images to grow and share the space equally */
-            min-width: 0; /* Prevents images from overflowing their container */
+            width: 0; /* Ensures images start at zero width and grow proportionally */
             border: 1px solid #ccc;
-            height: 250px; /* NEW: Sets a fixed height for all images */
-            object-fit: cover; /* NEW: Ensures images maintain aspect ratio without distortion */
+            /* Removed the fixed height and object-fit properties */
         }
 
         hr {
