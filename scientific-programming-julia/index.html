@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bayesian SIR Workflow</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // MathJax configuration to explicitly define delimiters
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         tailwind.config = {
@@ -192,7 +204,7 @@ savefig("figs/noisy_true_sol.png")</code></pre>
                 <br><br>
                 Then, for a disease to become an epidemic, $R_0 > 1$. Our guess of 2 is a good starting point and the prior $\beta \sim \text{Normal}(\log(2.0), 0.4)$ encompasses any $R_0$ value from 0.9 to 4.4. Hence $\beta$ can be calculated via $\beta=R_0 \cdot \gamma$.
                 <br><br>
-                The code below uses Turing.jl's @model macro to define this. @model enables the user to assign probability distributions to variables in the function. It also takes data in as input, then calculates the likelihoods, which then connects the parameters to the observations. It also automatically prepares the model for inference in the MCMC algorithm.
+                The code below uses Turing.jl's `@model` macro to define this. `@model` enables the user to assign probability distributions to variables in the function. It also takes data in as input, then calculates the likelihoods, which then connects the parameters to the observations. It also automatically prepares the model for inference in the MCMC algorithm.
             </p>
             <div class="code-block">
                 <pre><code>@model function sir_model(data, prob)
@@ -266,7 +278,7 @@ R0s = exp.(log_R0s)
 betas = gammas .* R0s
                     
 num_simulations = length(betas)
-simulated_infected = Vector{Vector<Float64>>(undef, num_simulations)
+simulated_infected = Vector{Vector{Float64}}(undef, num_simulations)
 time_points = sol.t
                     
 generated_plot = plot(
