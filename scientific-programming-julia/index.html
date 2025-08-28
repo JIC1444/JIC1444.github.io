@@ -241,22 +241,22 @@ savefig("figs/true_sol_and_error.png")</code></pre>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 1: True Solution</h3>
             <p class="text-gray-700 mb-4">
-                The solution of the SIR model with $\beta, \gamma = 0.25, 0.05$. 
-                The blue trajectory is the Susceptible compartment, 
-                the orange is the Infected compartment 
-                and the green is the Recovered compartment.
+                The number of infecteds, with the observation error added.
             </p>
             <div class="figure-container">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/true_sol.png" alt="Plot of the true SIR solution.">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/observed_error_infected.png" alt="Plot of the true SIR solution.">
             </div>
 
             <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-2">Figure 2: Noisy Data</h3>
             <p class="text-gray-700 mb-4">
-                The solution from before, with added Gaussian noise to emulate error-
-                prone, real-world data.
+                The solution of the SIR model with $\beta, \gamma = 0.25, 0.05$. 
+                The blue trajectory is the Susceptible compartment, 
+                the orange is the Infected compartment 
+                and the green is the Recovered compartment.
+                The infecteds with error is then plotted as a comparison.
             </p>
             <div class="figure-container">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/noisy_true_sol.png" alt="Plot of the true SIR solution with noise.">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/true_sol_and_error.png" alt="Plot of the true SIR solution with noise.">
             </div>
         </section>
 
@@ -367,10 +367,10 @@ display(summarystats(chain))</code></pre>
                 This is backed up by the rhat values of ~1.00.
             </p>
             <div class="figure-container">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/bfdd03620461bc068b5063008016c38005339676/scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters.">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/chain.png" alt="Plot of the MCMC chains, showing trace and density plots for the parameters.">
             </div>
             <div class="figure-container">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/29c4b6783339d47068efc7cb87a14ddd06046f70/scientific-programming-julia/figs/chain_summary.png" alt="Chain Summary.">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/chain_summary.png" alt="Chain Summary.">
             </div>
 
         </section>
@@ -425,7 +425,7 @@ savefig(plot1, "figs/generated_sols.png")</code></pre>
                 closely resembles the original data (without noise).
             </p>
             <div class="figure-container">
-                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/e5264ba1e31607807a1de21addf2e7f9874edfd0/scientific-programming-julia/figs/generated_sols.png" alt="A plot showing a cloud of simulated trajectories.">
+                <img src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/generated_sols.png" alt="A plot showing a cloud of simulated trajectories.">
             </div>
 
         </section>
@@ -528,7 +528,7 @@ savefig("figs/forecast.png")</code></pre>
                 'cone' of uncertainty, which can be seen best in the Day 20-35 plot.
             </p>
             <div class="figure-container">
-                <img id="forecast-image" src="https://github.com/JIC1444/JIC1444.github.io/raw/408884d0f7df79b5b0c3ff030eb8bac1dfcde532/scientific-programming-julia/figs/forecast.png" alt="A grid plot showing multiple forecast simulations.">
+                <img id="forecast-image" src="https://github.com/JIC1444/JIC1444.github.io/raw/25200a529e121d51142062baae8108aa560fd387/scientific-programming-julia/figs/forecast.png" alt="A grid plot showing multiple forecast simulations.">
             </div>
         </section>
 
