@@ -85,10 +85,51 @@
 <body>
 
     <header>
-        Jake Cordery - Mathematics Graduate<br>Machine Learning Portfolio
+        Jake Cordery - Aspiring Machine Learning Researcher<br>Machine Learning Portfolio
     </header>
 
+    <hr>
+
     <section>
+        <div class="project">
+            <div class="project-title">
+                <a href="" target="_blank" rel="noopener noreferrer">About me</a>
+            </div>
+            <img src="">
+            <div class="project-description">
+                My name is Jake Cordery, I find machine learning and all things related
+                equally fascinating and baffling - I have done alot of different research and 
+                engineering projects within the deep learning space in order to gain a 
+                general overview of the most prominent methods in computer vision, time-series
+                forecasting, language processing, etc. At the moment I am looking to do a PhD 
+                in deep learning, applied to the field of disease/medicine. To me, this is 
+                the ultimate use of AI - to change people's lives and even lifespans. 
+                The detection and prevention of life-altering or life-threatening diseases is the 
+                area I want to dedicate myself to.
+                <br><br>
+                On top of this, I am starting my own company - Pioneer.AI, 
+                offering private LLM services to small to medium companies who do not 
+                have in-house GPUs and require that company data is never used for training.
+                The scope of responsibilities that founding a company brings has been a great
+                learning experience, and has intoduced me to many new skills within DevOps,
+                legal, marketing and buisness as a whole.
+                <br><br>
+                I have a 1st class degree in BSc (Hons) Mathematics from the University of 
+                York (2022-2025), winning the best programming project prize for my dissertation, 
+                and being runner up for best overall prize (highest mark). Currently, I am 
+                completing my Master's degree in Artificial Intelligence at St. Andrews University.
+                <br><br>
+                Below is a summary of many of the projects I have completed in the realm of machine
+                learning, data science and data analytics. The projects are in chronological
+                order.
+            </div>
+            <!-- <div class="image-container">
+                <img src="images/chain.png" alt="Chain results graph">
+            </div> -->
+        </div>
+
+        <hr>
+
         <div class="project">
             <div class="project-title">
                 <a href="https://jic1444.github.io/scientific-programming-julia" target="_blank" rel="noopener noreferrer">Disease Modelling with Bayesian Inference</a>
@@ -97,13 +138,16 @@
             <div class="project-description">
                 A project exploring the mathematical and statistical side of disease modelling 
                 (as my dissertation focussed on the use of deep learning methods).
-                It combined the skills and experience gained in modules: Statistical Pattern 
-                Recognition, Mathematical Modelling: Computational Methods
-                and Mathematical Ecology, Epidemiology & Evolution. 
+                It combined the skills and experience gained in many of my final year modules 
+                at York, and tested the advantages of the Julia programming language, including
+                the packages Turing.jl and DifferentialEquations.jl.
                 <br><br>
-                I found that Bayesian modelling can enable a strong idea of how a disease
+                I found that Bayesian modelling enables a strong idea of how a disease
                 may spread through a population, with much less data and computational power
                 than deep learning methods.
+                <br><br>
+                Thank you to Dr. Gustav Delius (University of York) for offering supervisory 
+                comments in order to improve the results of this project. 
             </div>
             <div class="image-container">
                 <img src="images/chain.png" alt="Chain results graph">
@@ -112,6 +156,8 @@
         </div>
 
         <hr>
+
+
 
         <div class="project">
             <div class="project-title">
@@ -127,10 +173,47 @@
                 I found that the most effective deep learning models were the LSTMs,
                 however, my work suggests that statistical methods such as ARIMA
                 are still the gold-standard for time-series prediciton.
+                <br><br>
+                Thank you to Dr. Richard Bingham at the University of York for supervising
+                this project.
             </div>
             <div class="image-container">
                 <img src="images/forecasting_covid_results_graph.png" alt="Project results graph">
                 <img src="images/forecasting_covid_results_table.png" alt="Project results table">
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="project">
+            <div class="project-title">
+                <a href="https://github.com/JIC1444/Collagen-Prediction" target="_blank" rel="noopener noreferrer">Predicting the thermal stability of collagen</a>
+            </div>
+            <div class="project-description">A research project with the Director of 
+                Mathematical Sciences at York - Mitya Pushkin. The project 
+                is a start toward the greater goal of developing a diffusion model 
+                to generate novel collagen sequences. To make this possible, however,
+                there needs to exist a reliable in silico method of testing whether 
+                these novel sequences of collagen have a realistic set of properties.
+                <br><br>
+                This is the reasoning behind my implementation of Markus J. Buehler's
+                paper 'CollagenTransformer: End-to-End Transformer Model to Predict 
+                Thermal Stability of Collagen Triple Helices Using an NLP Approach'. 
+                The paper being a fe years old meant that the Python Notebook on the 
+                github repo for the paper was no longer working
+                and returned inaccurate values. So firstly, a lot of time was spent in 
+                finding the correct package versions by trial and error. 
+                Then, the CollagenTransformer was tested on data from the department, 
+                to ensure that the model was accurate (illustrated below).
+                <br><br>
+                Then, a literature review was conducted in the realm of de novo generation
+                of protein and collagen sequences. Overall, this determined that currently,
+                while de novo generation of proteins (not including collagens) is a promising
+                direction, there is currently not enough data on the sequences of collagen
+                to train a reliable model.
+            </div>
+            <div class="image-container">
+                <img src="images/tm_pred.png" alt="Project results graph">
             </div>
         </div>
 
